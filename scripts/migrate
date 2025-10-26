@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# SPDX-License-Identifier: MPL-2.0
 set -euo pipefail
 
 echo "No database migrations are defined. Add migration tooling under infra/ before using this command." >&2

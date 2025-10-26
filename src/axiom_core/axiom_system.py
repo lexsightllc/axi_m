@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MPL-2.0
 """Core orchestration primitives for the AXIΩM framework."""
 
 from __future__ import annotations

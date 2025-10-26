@@ -91,6 +91,15 @@ are enforced by the commit template and commitlint hook installed by
 
 ## Licensing
 
-This project is licensed under the Apache License, Version 2.0. Historical
-artifacts in `docs/legacy/` retain their original licensing and should be
-consulted before reuse.
+This project is licensed under the [Mozilla Public License 2.0 (MPL-2.0)](LICENSE).
+Modifications to MPL-covered files must be shared under the same license, while
+larger works that merely aggregate or interface with the code may remain
+proprietary. Historical artifacts in `docs/legacy/` retain their original
+licensing; consult those directories and the accompanying [NOTICE](NOTICE)
+before reuse.
+
+## Credits
+
+Primary authorship and stewardship are retained by Augusto “Guto” Ochoa Ughini
+and the AXIΩM Structure Stewards. See [NOTICE](NOTICE) for additional
+attribution details and third-party notices.

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MPL-2.0
 repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.6.9
@@ -22,6 +23,11 @@ repos:
           - types-requests
   - repo: local
     hooks:
+      - id: spdx-headers
+        name: ensure SPDX headers
+        entry: ./scripts/ensure-spdx
+        language: system
+        pass_filenames: true
       - id: pytest
         name: pytest
         entry: ./scripts/test

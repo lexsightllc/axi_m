@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MPL-2.0
 """AXIΩM meta-constraint enforcement primitives."""
 
 from __future__ import annotations

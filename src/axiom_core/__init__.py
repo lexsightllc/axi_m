@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MPL-2.0
 """Public interface for the AXIΩM ontological core."""
 
 from .axiom_system import AxiomSystem
