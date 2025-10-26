@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MPL-2.0
 """Tests covering the ontological governance primitives."""
 
 from __future__ import annotations

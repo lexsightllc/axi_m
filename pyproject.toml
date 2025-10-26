@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MPL-2.0
 [build-system]
 requires = ["hatchling>=1.18"]
 build-backend = "hatchling.build"
@@ -8,9 +9,12 @@ version = "0.1.0"
 description = "Structured ontological governance primitives for the AXIΩM research program."
 readme = "README.md"
 requires-python = ">=3.11"
-license = { file = "LICENSE" }
+license = { text = "MPL-2.0" }
 authors = [
   { name = "AXIΩM Structure Stewards", email = "maintainers@axiom-framework.org" }
+]
+classifiers = [
+  "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)"
 ]
 dependencies = []
 

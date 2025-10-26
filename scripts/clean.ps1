@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MPL-2.0
 Param(
     [Parameter(ValueFromRemainingArguments = $true)]
     [string[]]$Args

@@ -25,6 +25,16 @@ Participation in this project is governed by the [Code of Conduct](CODE_OF_CONDU
    - Evidence of successful checks.
    - Notes on observability, migrations, or follow-up actions where relevant.
 
+## Licensing and Contributor Terms
+
+- All inbound contributions are accepted under the Mozilla Public License 2.0
+  (MPL-2.0). By submitting a contribution you affirm that you have the right to
+  do so under inbound=outbound terms and that the project may redistribute your
+  contribution under MPL-2.0.
+- Modifications to MPL-covered files must remain under MPL-2.0. Larger works
+  that merely depend upon or interface with these files may remain under their
+  own licenses, provided the MPL obligations for the covered files are met.
+
 ## Testing Standards
 
 - Unit tests mirror the package hierarchy under `tests/unit/` and follow the

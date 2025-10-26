@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# SPDX-License-Identifier: MPL-2.0
 set -euo pipefail
 
 if ! command -v npx >/dev/null 2>&1; then

@@ -1,0 +1,87 @@
+#!/usr/bin/env python3
+# SPDX-License-Identifier: MPL-2.0
+"""Ensure tracked files contain an MPL-2.0 SPDX header."""
+from __future__ import annotations
+
+import sys
+from pathlib import Path
+from typing import Iterable
+
+SPDX_LINE = "SPDX-License-Identifier: MPL-2.0"
+SKIP_DIRS = {
+    Path("docs/legacy"),
+    Path("node_modules"),
+}
+COMMENT_PREFIXES = {
+    ".py": "#",
+    ".pyi": "#",
+    ".sh": "#",
+    ".bash": "#",
+    ".ps1": "#",
+    ".psm1": "#",
+    ".cjs": "//",
+    ".js": "//",
+    ".ts": "//",
+    ".yaml": "#",
+    ".yml": "#",
+    ".toml": "#",
+    ".cfg": "#",
+    ".ini": "#",
+}
+
+
+def should_skip(path: Path) -> bool:
+    return any(part in path.parents for part in SKIP_DIRS) or path in SKIP_DIRS
+
+
+def comment_prefix(path: Path, first_line: str) -> str | None:
+    suffix = path.suffix.lower()
+    if suffix in COMMENT_PREFIXES:
+        return COMMENT_PREFIXES[suffix]
+    if first_line.startswith("#!"):
+        return "#"
+    return None
+
+
+def ensure_header(path: Path) -> bool:
+    try:
+        text = path.read_text(encoding="utf-8")
+    except UnicodeDecodeError:
+        return False
+
+    if SPDX_LINE in text.splitlines()[:5]:
+        return False
+
+    lines = text.splitlines()
+    first_line = lines[0] if lines else ""
+    prefix = comment_prefix(path, first_line)
+    if prefix is None:
+        return False
+
+    header_line = f"{prefix} {SPDX_LINE}"
+
+    insert_at = 0
+    if first_line.startswith("#!"):
+        insert_at = 1
+
+    new_lines = lines.copy()
+    new_lines.insert(insert_at, header_line)
+    path.write_text("\n".join(new_lines) + ("\n" if text.endswith("\n") or not text else ""), encoding="utf-8")
+    return True
+
+
+def main(paths: Iterable[str]) -> int:
+    changed = False
+    for arg in paths:
+        path = Path(arg)
+        if not path.exists() or should_skip(path):
+            continue
+        if path.is_dir():
+            continue
+        if ensure_header(path):
+            changed = True
+    return 1 if changed else 0
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))
