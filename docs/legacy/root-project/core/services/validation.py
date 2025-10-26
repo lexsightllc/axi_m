@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 from pydantic import BaseModel, EmailStr
 from typing import Optional
 

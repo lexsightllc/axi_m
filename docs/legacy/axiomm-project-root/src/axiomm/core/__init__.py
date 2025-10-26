@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 # axiomm-project/src/axiomm/core/__init__.py
 # Core functional components of the AXIΩM system.
 

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 # axiomm-project/src/axiomm/core/axiomatic_singularity.py
 
 import numpy as np

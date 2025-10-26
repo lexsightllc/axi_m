@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 # axiomm-project/src/axiomm/core/uncertainty_manifold.py
 
 import numpy as np

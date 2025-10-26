@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 from fastapi import APIRouter, Depends, HTTPException, status
 from uuid import UUID
 from typing import List

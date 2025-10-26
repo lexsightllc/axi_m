@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 from uuid import uuid4, UUID
 from pydantic import BaseModel, EmailStr, Field
 from datetime import datetime

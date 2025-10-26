@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 # axiomm-project/src/axiomm/core/epistemic_deferral_kernel.py
 
 import numpy as np
