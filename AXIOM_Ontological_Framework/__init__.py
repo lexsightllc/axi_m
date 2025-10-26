@@ -1,1 +1,0 @@
-"""AXIΩM Ontological Framework package."""

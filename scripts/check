@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=scripts/_helpers.sh
+source "$SCRIPT_DIR/_helpers.sh"
+
+ensure_venv
+
+"$SCRIPT_DIR/lint"
+"$SCRIPT_DIR/typecheck"
+"$SCRIPT_DIR/test"
+with_env in_venv coverage report --fail-under=85
+with_env in_venv coverage xml -o coverage.xml
+"$SCRIPT_DIR/security-scan"

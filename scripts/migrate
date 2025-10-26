@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+echo "No database migrations are defined. Add migration tooling under infra/ before using this command." >&2
+exit 0

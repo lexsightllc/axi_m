@@ -1,0 +1,23 @@
+site_name: "AXIΩM Ontological Framework"
+site_description: "Documentation for the structured ontological governance toolkit"
+repo_url: https://github.com/axiom-framework/axiomm
+nav:
+  - Overview: docs/index.md
+  - Developer Guide: docs/developer-guide.md
+  - ADRs:
+      - "0001-standardized-structure": docs/adr/0001-standardized-structure.md
+      - "0002-observability-foundation": docs/adr/0002-observability-foundation.md
+  - Legacy Archive: docs/legacy/axiom-ontological-framework.md
+theme:
+  name: material
+  palette:
+    scheme: default
+    primary: teal
+    accent: blue
+plugins:
+  - search
+markdown_extensions:
+  - admonition
+  - codehilite
+  - toc:
+      permalink: true

@@ -1,0 +1,19 @@
+name: axiomm-ontological-framework
+language: python
+package_manager: pip
+runtime_versions:
+  python: "3.11.7"
+  node: "20.10.0"
+entrypoints:
+  package: axiom_core
+  cli: python -m axiom_core
+  tests: pytest
+ports: []
+service_type: library
+owners:
+  - team: axiomm-structure-stewards
+    contacts:
+      - email: maintainers@axiom-framework.org
+      - slack: "#axiomm-structure"
+notes:
+  - "Legacy prototypes are archived under docs/legacy and excluded from active CI."

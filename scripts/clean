@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=scripts/_helpers.sh
+source "$SCRIPT_DIR/_helpers.sh"
+
+pushd "$ROOT_DIR" >/dev/null
+rm -rf .pytest_cache .mypy_cache htmlcov dist build site coverage.xml .coverage
+find src tests -type d -name "__pycache__" -exec rm -rf {} +
+popd >/dev/null

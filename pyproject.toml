@@ -1,0 +1,114 @@
+[build-system]
+requires = ["hatchling>=1.18"]
+build-backend = "hatchling.build"
+
+[project]
+name = "axiomm-ontological-framework"
+version = "0.1.0"
+description = "Structured ontological governance primitives for the AXIΩM research program."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { file = "LICENSE" }
+authors = [
+  { name = "AXIΩM Structure Stewards", email = "maintainers@axiom-framework.org" }
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+  "bandit>=1.7",
+  "black>=24.10",
+  "build>=1.2",
+  "commitizen>=3.28",
+  "coverage[toml]>=7.6",
+  "cyclonedx-bom>=4.1",
+  "isort>=5.13",
+  "mkdocs>=1.6",
+  "mkdocs-material>=9.5",
+  "mypy>=1.10",
+  "pip-audit>=2.7",
+  "pip-tools>=7.4",
+  "pre-commit>=3.7",
+  "pytest>=7.4",
+  "pytest-cov>=4.1",
+  "pytest-watch>=4.2",
+  "ruff>=0.6",
+]
+
+[project.urls]
+Homepage = "https://github.com/axiom-framework/axiomm"
+Documentation = "https://axiom-framework.org/docs"
+
+[tool.coverage.run]
+branch = true
+source = ["src/axiom_core"]
+omit = ["tests/*"]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 85
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+filterwarnings = [
+  "error::DeprecationWarning",
+  "error::PendingDeprecationWarning",
+]
+addopts = "--strict-markers"
+
+[tool.black]
+line-length = 100
+target-version = ["py311"]
+
+[tool.isort]
+profile = "black"
+line_length = 100
+known_first_party = ["axiom_core"]
+
+[tool.ruff]
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+  "E",
+  "F",
+  "I",
+  "B",
+  "UP",
+  "SIM",
+  "PL",
+  "RUF",
+]
+ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_unused_configs = true
+namespace_packages = true
+mypy_path = ["src"]
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "0.1.0"
+version_files = [
+  "pyproject.toml:version",
+  "CHANGELOG.md",
+]
+tag_format = "v$version"
+update_changelog_on_bump = true
+
+[tool.bandit]
+tests = ["B201", "B301", "B302", "B303", "B304", "B305", "B306", "B307", "B310", "B311", "B314", "B315", "B316", "B317", "B318", "B319", "B320", "B324", "B325", "B602", "B604", "B605", "B606", "B607", "B608", "B609", "B610", "B611", "B701", "B702", "B703"]
+
+[tool.mkdocs]
+site_name = "AXIΩM Ontological Framework"
+site_description = "Documentation for the structured ontological governance toolkit."

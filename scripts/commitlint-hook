@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if ! command -v npx >/dev/null 2>&1; then
+  echo "commitlint requires Node.js and npm. Install them via make bootstrap." >&2
+  exit 1
+fi
+
+npx --no-install commitlint --edit "$1"

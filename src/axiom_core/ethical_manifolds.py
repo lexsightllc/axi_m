@@ -10,7 +10,7 @@ class EthicalManifold(ABC):
     @abstractmethod
     def evaluate_principle(self, principle: str, context: Dict[str, Any]) -> Dict[str, Any]:
         """Evaluate a principle or action and return an assessment."""
-        pass
+        raise NotImplementedError
 
 
 class KantianDeontologicalManifold(EthicalManifold):

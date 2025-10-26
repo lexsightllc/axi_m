@@ -1,0 +1,6 @@
+# Global ownership
+* @axiomm-structure-stewards
+
+# Sensitive scripts
+scripts/ @axiomm-structure-stewards
+.github/ @axiomm-structure-stewards
