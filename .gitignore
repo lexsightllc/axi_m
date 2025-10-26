@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.build/
+.eggs/
+*.egg
+*.egg-info/
+venv/
+.venv/
+dist/
+build/
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+.coverage
+coverage.xml
+.cache/
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Editors
+.vscode/
+.idea/
+
+# Node
+node_modules/
+.npm/
+
+# MkDocs
+site/
+
+# SBOM artifacts
+sbom/*.json
+sbom/*.xml

@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=scripts/_helpers.sh
+source "$SCRIPT_DIR/_helpers.sh"
+
+ensure_venv
+pushd "$ROOT_DIR" >/dev/null
+run_pip install --upgrade pip setuptools wheel
+run_pip install -e ".[dev]"
+
+if command -v npm >/dev/null 2>&1; then
+  npm install --no-audit --no-fund
+fi
+
+in_venv pre-commit install --hook-type pre-commit --hook-type commit-msg
+in_venv pre-commit autoupdate || true
+
+if [[ -f "$ROOT_DIR/.gitmessage" ]]; then
+  git config commit.template "$ROOT_DIR/.gitmessage"
+fi
+
+echo "Bootstrap complete. Activate the environment with 'source .venv/bin/activate'."
+popd >/dev/null

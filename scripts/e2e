@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=scripts/_helpers.sh
+source "$SCRIPT_DIR/_helpers.sh"
+
+export PYTHONPATH="$ROOT_DIR/src:${PYTHONPATH:-}"
+ensure_venv
+
+if find "$ROOT_DIR/tests/e2e" -type f \( -name "test_*.py" -o -name "*_test.py" \) | head -n1 >/dev/null 2>&1; then
+  with_env in_venv pytest tests/e2e "$@"
+else
+  echo "No end-to-end tests found. Skipping." >&2
+fi

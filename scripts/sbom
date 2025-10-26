@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=scripts/_helpers.sh
+source "$SCRIPT_DIR/_helpers.sh"
+
+ensure_venv
+mkdir -p "$ROOT_DIR/sbom"
+
+with_env in_venv cyclonedx-bom --format json --spec-version 1.4 --output "$ROOT_DIR/sbom/axiomm-sbom.json"

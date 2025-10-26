@@ -1,6 +1,10 @@
+"""Core orchestration primitives for the AXIΩM framework."""
+
+from __future__ import annotations
+
 import logging
 import random
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 from .meta_constraint import MetaConstraint
 from .epistemic_telemetry import EpistemicTelemetry
@@ -10,13 +14,19 @@ from .ethical_manifolds import (
     UtilitarianConsequentialistManifold,
 )
 
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+logger = logging.getLogger(__name__)
 
 
 class AxiomSystem:
     """Represents a conceptual AI system built on AXIΩM principles."""
 
-    def __init__(self, name: str, axiomatic_constraints: List[str]):
+    def __init__(
+        self,
+        name: str,
+        axiomatic_constraints: List[str],
+        *,
+        random_seed: Optional[int] = None,
+    ) -> None:
         self.name = name
         self.meta_constraint = MetaConstraint(axiomatic_constraints)
         self.epistemic_telemetry = EpistemicTelemetry()
@@ -28,22 +38,42 @@ class AxiomSystem:
             "hobbesian": HobbesianSocialContractarianManifold(),
             "utilitarian": UtilitarianConsequentialistManifold(),
         }
-        logging.info("AxiomSystem '%s' initialized with ethical manifolds.", self.name)
+        self._random = random.Random(random_seed)
+        logger.info(
+            "axiom_system.initialized",
+            extra={
+                "system": self.name,
+                "axiom_count": len(axiomatic_constraints),
+                "seeded": random_seed is not None,
+            },
+        )
 
-    def update_internal_mechanisms(self, external_policy: Dict[str, Any]):
-        logging.info("System '%s' updating internal mechanisms based on new policy.", self.name)
+    def update_internal_mechanisms(self, external_policy: Dict[str, Any]) -> None:
+        logger.info(
+            "axiom_system.policy_update",
+            extra={"system": self.name, "policy": external_policy.get("name", "unnamed")},
+        )
         self.current_state["policies"] = self.meta_constraint.apply_constraint_symmetry_propagation(
             external_policy, self.current_state["policies"]
         )
 
     def propose_action(self, action_details: Dict[str, Any]) -> Dict[str, Any]:
-        logging.info("System '%s' proposing action: %s.", self.name, action_details.get("description", "unspecified"))
+        logger.info(
+            "axiom_system.propose_action",
+            extra={
+                "system": self.name,
+                "action_description": action_details.get("description", "unspecified"),
+            },
+        )
         current_assumptions = {"known_facts": self.current_state["knowledge_base"]}
         permissible = self.meta_constraint.decouple_temporal_authority(current_assumptions, action_details)
         if not permissible:
-            logging.error(
-                "Action '%s' rejected due to temporal decoupling violation.",
-                action_details.get("description", "unspecified"),
+            logger.error(
+                "axiom_system.temporal_decoupling_violation",
+                extra={
+                    "system": self.name,
+                    "action_description": action_details.get("description", "unspecified"),
+                },
             )
         evaluations = self.reason_through_ethical_manifolds(action_details.get("description", "unspecified action"))
         return {
@@ -53,25 +83,37 @@ class AxiomSystem:
         }
 
     def _detect_semantic_entropy(self, input_data: str) -> float:
-        if any(k in input_data.lower() for k in ["contradict", "paradox", "uncomputable"]):
+        lowered = input_data.lower()
+        if any(k in lowered for k in ["contradict", "paradox", "uncomputable"]):
             self.semantic_entropy_level = 0.9
-        elif any(k in input_data.lower() for k in ["ethical dilemma", "moral ambiguity"]):
+        elif any(k in lowered for k in ["ethical dilemma", "moral ambiguity"]):
             self.semantic_entropy_level = 0.7
         else:
-            self.semantic_entropy_level = random.uniform(0.0, 0.4)
-        logging.debug("Semantic entropy detected: %.2f", self.semantic_entropy_level)
+            self.semantic_entropy_level = self._random.uniform(0.0, 0.4)
+        logger.debug(
+            "axiom_system.semantic_entropy_detected",
+            extra={"system": self.name, "entropy_level": round(self.semantic_entropy_level, 3)},
+        )
         return self.semantic_entropy_level
 
     def _epistemic_checksum_check(self, entropy_level: float, current_output_certainty: float) -> float:
         if entropy_level > 0.6:
-            logging.warning(
-                "Epistemic checksum: High semantic entropy detected. Lowering assertive probability."
+            logger.warning(
+                "axiom_system.epistemic_checksum_adjustment",
+                extra={
+                    "system": self.name,
+                    "entropy_level": round(entropy_level, 3),
+                    "confidence_before": current_output_certainty,
+                },
             )
             return max(0.1, current_output_certainty * (1 - entropy_level))
         return current_output_certainty
 
     def perform_inference(self, query: str, context: Dict[str, Any]) -> Dict[str, Any]:
-        logging.info("System '%s' performing inference for query: '%s'.", self.name, query)
+        logger.info(
+            "axiom_system.perform_inference",
+            extra={"system": self.name, "query": query, "context_keys": sorted(context)},
+        )
         introspection_time_ms = 73.0
         self.epistemic_telemetry.simulate_introspection(introspection_time_ms)
         entropy = self._detect_semantic_entropy(query)
@@ -87,7 +129,10 @@ class AxiomSystem:
             },
         }
         if entropy > 0.5:
-            logging.info("High semantic entropy detected. Engaging representational superposition collapse deferral.")
+            logger.info(
+                "axiom_system.high_entropy",
+                extra={"system": self.name, "entropy_level": round(entropy, 3)},
+            )
             inference_result["result_type"] = "structured_uncertainty"
             inference_result["confidence"] = self._epistemic_checksum_check(entropy, inference_result["confidence"])
             if entropy > 0.8:
@@ -166,11 +211,21 @@ class AxiomSystem:
         context = {"current_system_knowledge": self.current_state["knowledge_base"]}
         for name, manifold in self.ethical_manifolds.items():
             evaluations[name] = manifold.evaluate_principle(principle_or_action_description, context)
-        logging.info("Performed multi-manifold ethical reasoning for: '%s'.", principle_or_action_description)
+        logger.info(
+            "axiom_system.ethical_reasoning",
+            extra={
+                "system": self.name,
+                "principle": principle_or_action_description,
+                "manifolds": sorted(self.ethical_manifolds.keys()),
+            },
+        )
         return evaluations
 
     def evolve_system(self, new_paradigm_proposal: Any) -> bool:
-        logging.info("System '%s' evaluating new paradigm for evolution.", self.name)
+        logger.info(
+            "axiom_system.evaluate_evolution",
+            extra={"system": self.name, "proposal": str(new_paradigm_proposal)},
+        )
         return self.meta_constraint.verify_corrigibility(new_paradigm_proposal)
 
     def get_telemetry(self) -> Dict[str, Any]:
@@ -178,7 +233,10 @@ class AxiomSystem:
 
     def add_knowledge(self, knowledge_item: str):
         self.current_state["knowledge_base"].append(knowledge_item)
-        logging.info("Added knowledge: '%s' to system '%s'.", knowledge_item, self.name)
+        logger.info(
+            "axiom_system.knowledge_added",
+            extra={"system": self.name, "knowledge_item": knowledge_item},
+        )
 
     def get_reflection_trails(self) -> List[Dict[str, Any]]:
         return self.reflection_trails
