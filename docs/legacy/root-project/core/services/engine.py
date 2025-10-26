@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 from typing import Optional, List, Protocol
 from uuid import UUID
 

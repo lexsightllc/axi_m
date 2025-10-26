@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 from fastapi import FastAPI, Request, status
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware

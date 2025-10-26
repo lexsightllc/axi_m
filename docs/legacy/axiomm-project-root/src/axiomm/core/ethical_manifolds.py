@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 # axiomm-project/src/axiomm/core/ethical_manifolds.py
 
 from abc import ABC, abstractmethod

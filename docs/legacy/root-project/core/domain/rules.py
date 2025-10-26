@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 from typing import List
 from core.domain.models import User
 

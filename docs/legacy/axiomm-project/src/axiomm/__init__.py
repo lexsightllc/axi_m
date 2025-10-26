@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 # src/axiomm/__init__.py
 # AXIOMM: Architectural eXpansive Interface for Ontological Mediation
 

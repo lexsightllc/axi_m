@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 from typing import Dict, Any, List
 import logging
 from core.exceptions import EthicalViolationError

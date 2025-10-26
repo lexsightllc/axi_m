@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 from typing import Dict, List, Optional
 from core.domain.models import User, UserId
 from core.services.engine import UserRepository
